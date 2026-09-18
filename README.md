@@ -2,6 +2,17 @@
 # ⚓ Battleship 2.0
 
 # GrupoTP06_LEI-1 — ISCTE
+
+## 📖 Table of Contents
+- [Project Overview](#-project-overview)
+- [Key Features](#-key-features)
+- [Technical Stack](#-technical-stack)
+- [Installation & Setup](#-installation--setup)
+- [Code Architecture](#-code-architecture)
+- [Roadmap](#-roadmap)
+- [Contributing](#-contributing)
+
+
 | Nome    | Número  |
 |---------|---------|
 | João    | 129767  |
