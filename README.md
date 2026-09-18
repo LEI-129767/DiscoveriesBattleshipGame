@@ -2,6 +2,7 @@
 # ⚓ Battleship 2.0
 
 # GrupoTP06_LEI-1 — ISCTE
+![License](https://img.shields.io/badge/license-MIT-green)
 
 ## 📖 Table of Contents
 - [Elementos do grupo](##-Elementos-do-grupo)
