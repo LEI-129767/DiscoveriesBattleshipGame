@@ -56,6 +56,8 @@ O jogo usa nomes de navios do tempo das Descobertas em vez dos nomes modernos da
 Navio de guerra de grande porte, criado a partir de 1520 para responder às exigências militares da rota do Índico. Tinha castelos de proa mais baixos que a nau, o que o tornava mais rápido e manobrável, e podia disparar canhões tanto pela proa como pela popa.
 Saiba mais: [Galleon, Wikipédia (inglês)](https://en.wikipedia.org/wiki/Galleon)
 
+![alt text](image.png)
+
 ### Fragata (Navio de 4 canhões, 4 casas, 1 unidade)
 O termo surgiu no Mediterrâneo em finais do século XV para designar embarcações leves, rápidas e manobráveis, usadas em patrulha e escolta. Na época dos Descobrimentos era sobretudo um navio veloz e pequeno, bem antes de se tornar, séculos depois, a fragata clássica que hoje se conhece dos filmes de piratas.
 Saiba mais: [Frigate, Wikipédia (inglês)](https://en.wikipedia.org/wiki/Frigate)
