@@ -5,21 +5,17 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ## 📖 Table of Contents
-- [Elementos do grupo](##-Elementos-do-grupo)
-- [Key Features](#-key-features)
-- [Technical Stack](#-technical-stack)
-- [Installation & Setup](#-installation--setup)
-- [Code Architecture](#-code-architecture)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
+- [Elementos do grupo](#elementos-do-grupo)
+- [Regras do Jogo](#regras-do-jogo)
+- [Navios da Época dos Descobrimentos](#navios-da-época-dos-descobrimentos)
 
 ## Elementos do grupo
-| Nome    | Número  |
-|---------|---------|
-| João    | 129767  |
-| Mihaita | 130505  |
-| Afonso  | 129835  |
-| Rui     | 129857  |
+| Nome    | Número  | Curso |
+|---------|---------|-------|
+| João    | 129767  | LEI   |
+| Mihaita | 130505  | LEI   |
+| Afonso  | 129835  | LEI   |
+| Rui     | 129857  | LEI   |
 
 | Batalha Naval            | Descobrimentos | English | Dimensão | #Navios |
 |--------------------------|----------------|---------|----------|---------|
