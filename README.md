@@ -28,6 +28,29 @@
 | Navio de 2 canhões       | Caravela       | Caravel | 2        | 3       |
 | Submarino                | Barca          | Barge   | 1        | 4       |
 
+
+## Regras do Jogo
+
+O **Discoveries Battleship Game** segue as regras clássicas da Batalha Naval tradicional, adaptada ao contexto marítimo dos Descobrimentos:
+
+### 1. Preparação e Posicionamento
+- **Grelhas de Jogo:** Cada jogador dispõe de duas grelhas de **10x10 quadrados** (uma representa o seu próprio mar e a outra o mar do adversário).
+- **Orientação:** Os navios só podem ser colocados na **horizontal** ou na **vertical** (nunca na diagonal).
+- **Espaçamento:** Os navios **não se podem tocar entre si**, nem pelas laterais nem pelas pontas/diagonais. Podem, no entanto, ficar encostados às bordas da grelha.
+- **Frota Secreta:** O posicionamento da frota de cada jogador é mantido em segredo do adversário.
+
+### 2. Dinâmica do Jogo (Jogadas)
+- **Turnos:** Os jogadores jogam à vez.
+- **Rajada de Tiros:** Em cada turno, o jogador efetua **três disparos** de uma só vez, indicando as respetivas coordenadas `(linha, coluna)`.
+- **Relatório do Adversário:** O adversário informa o resultado da rajada de 3 tiros, indicando:
+  - Quais foram tiros na **água**;
+  - Se acertou num navio (tiro certeiro) e qual o **tipo de navio** atingido;
+  - Se algum navio foi completamente **afundado**.
+- **Registo:** Cada jogador vai anotando na grelha do oponente o desfecho dos seus disparos para rastrear a frota inimiga.
+
+### 3. Condição de Vitória
+- Vence o jogador que afundar primeiro todos os navios da frota adversária.
+
 ## Navios da Época dos Descobrimentos
 
 O jogo usa nomes de navios do tempo das Descobertas em vez dos nomes modernos da Batalha Naval. Aqui fica uma pequena apresentação de cada tipo, com uma ligação para saber mais.
