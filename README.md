@@ -1,5 +1,2 @@
-# Battleship
 
-Basic academic version of Battleship game to build upon.
-
-##F
+# ⚓ Battleship 2.0
