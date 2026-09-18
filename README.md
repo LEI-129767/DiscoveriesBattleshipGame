@@ -4,7 +4,7 @@
 # GrupoTP06_LEI-1 — ISCTE
 
 ## 📖 Table of Contents
-- [Project Overview](#-project-overview)
+- [Elementos do grupo](##-Elementos-do-grupo)
 - [Key Features](#-key-features)
 - [Technical Stack](#-technical-stack)
 - [Installation & Setup](#-installation--setup)
@@ -12,7 +12,7 @@
 - [Roadmap](#-roadmap)
 - [Contributing](#-contributing)
 
-
+## Elementos do grupo
 | Nome    | Número  |
 |---------|---------|
 | João    | 129767  |
