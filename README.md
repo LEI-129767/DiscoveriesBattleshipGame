@@ -40,7 +40,3 @@ Saiba mais: [Caravel, Wikipédia (inglês)](https://en.wikipedia.org/wiki/Carave
 ### Barca (Submarino, 1 casa, 4 unidades)
 A mais pequena e antiga das embarcações usadas nos primeiros anos dos Descobrimentos, ao lado do barinel. Tinha um só mastro com vela quadrangular, cerca de 25 toneladas, e servia sobretudo para reconhecimento costeiro, sendo depois substituída pela caravela nas viagens de exploração mais longas.
 Saiba mais: [Embarcações dos Descobrimentos, Infopédia](https://www.infopedia.pt/artigos/$embarcacoes-dos-descobrimentos) (não há artigo próprio e fiável sobre a barca na Wikipédia em português ou inglês)
-
----
-
-Todos os artigos acima têm fotografias e ilustrações históricas dos navios. Se quiserem incluir imagens diretamente no README, é preferível fazer o download de uma imagem de domínio público do Wikimedia Commons e adicioná-la ao repositório, em vez de apontar diretamente para o ficheiro (o link pode mudar ou deixar de existir).
