@@ -1,6 +1,5 @@
 /**
- * Provides the {@link Fleet} class, which manages the collection of ships
- * belonging to a player in the Battleship game.
+ *
  */
 package iscteiul.ista.battleship;
 
@@ -8,18 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents the fleet of ships belonging to a player in the Battleship game.
- * <p>
- * A fleet manages a collection of {@link IShip} instances, ensuring that
- * ships are placed within the board boundaries and do not collide with one
- * another. It also provides operations to query ships by category, check
- * which ships are still floating, and locate a ship at a given position.
- *
+ * Represents a player's fleet of ships in the Battleship game.
  */
 public class Fleet implements IFleet {
 
     /**
-     * Prints all the given ships to the standard output, one per line.
+     * Prints all the given ships, one per line.
      *
      * @param ships the list of ships to print
      */
@@ -30,18 +23,18 @@ public class Fleet implements IFleet {
 
     // -----------------------------------------------------
 
-    /** The list of ships that currently make up this fleet. */
+    /** The ships in this fleet. */
     private List<IShip> ships;
 
     /**
-     * Creates an empty fleet with no ships.
+     * Creates an empty fleet.
      */
     public Fleet() {
         ships = new ArrayList<>();
     }
 
     /**
-     * {@inheritDoc}
+     * @return the list of ships in this fleet
      */
     @Override
     public List<IShip> getShips() {
@@ -49,16 +42,10 @@ public class Fleet implements IFleet {
     }
 
     /**
-     * Attempts to add a ship to this fleet.
-     *
-     * The ship is only added if the fleet has not yet reached its maximum
-     * size ({@link IFleet#FLEET_SIZE}), the ship lies entirely within the
-     * board, and it does not risk colliding with any ship already present
-     * in the fleet.
+     * Adds a ship to the fleet, if it fits on the board and doesn't collide with other ships.
      *
      * @param s the ship to add
-     * @return {@code true} if the ship was successfully added,
-     *         {@code false} otherwise
+     * @return true if the ship was added, false otherwise
      */
     @Override
     public boolean addShip(IShip s) {
@@ -71,12 +58,10 @@ public class Fleet implements IFleet {
     }
 
     /**
-     * Returns the ships in this fleet belonging to the given category.
+     * Returns the ships of a given category (e.g. "Fragata").
      *
-     * @param category the category of ships to search for (e.g. "Galeao",
-     *                  "Fragata", "Nau", "Caravela", "Barca")
-     * @return a list containing every ship in this fleet whose category
-     *         matches {@code category}; the list is empty if none match
+     * @param category the category to search for
+     * @return the ships matching that category
      */
     @Override
     public List<IShip> getShipsLike(String category) {
@@ -89,10 +74,9 @@ public class Fleet implements IFleet {
     }
 
     /**
-     * Returns the ships in this fleet that have not yet been sunk.
+     * Returns the ships that haven't been sunk yet.
      *
-     * @return a list containing every ship in this fleet that is still
-     *         floating; the list is empty if the whole fleet has sunk
+     * @return the floating ships in this fleet
      */
     @Override
     public List<IShip> getFloatingShips() {
@@ -105,12 +89,10 @@ public class Fleet implements IFleet {
     }
 
     /**
-     * Returns the ship in this fleet that occupies the given position, if
-     * any.
+     * Returns the ship occupying a given position, if any.
      *
      * @param pos the position to check
-     * @return the ship occupying {@code pos}, or {@code null} if no ship
-     *         in this fleet occupies that position
+     * @return the ship at that position, or null if none
      */
     @Override
     public IShip shipAt(IPosition pos) {
@@ -121,12 +103,10 @@ public class Fleet implements IFleet {
     }
 
     /**
-     * Checks whether the given ship lies entirely within the board
-     * boundaries.
+     * Checks if a ship fits entirely within the board.
      *
      * @param s the ship to check
-     * @return {@code true} if every cell occupied by {@code s} is within
-     *         the board, {@code false} otherwise
+     * @return true if the ship is inside the board
      */
     private boolean isInsideBoard(IShip s) {
         return (s.getLeftMostPos() >= 0 && s.getRightMostPos() <= BOARD_SIZE - 1 && s.getTopMostPos() >= 0
@@ -134,13 +114,10 @@ public class Fleet implements IFleet {
     }
 
     /**
-     * Checks whether the given ship would be positioned too close to any
-     * ship already in this fleet, i.e. whether placing it would violate
-     * the game's no-touching rule between ships.
+     * Checks if a ship would be too close to an existing ship in the fleet.
      *
-     * @param s the candidate ship to check
-     * @return {@code true} if {@code s} is too close to an existing ship
-     *         in this fleet, {@code false} otherwise
+     * @param s the ship to check
+     * @return true if there's a collision risk
      */
     private boolean colisionRisk(IShip s) {
         for (int i = 0; i < ships.size(); i++) {
@@ -151,9 +128,7 @@ public class Fleet implements IFleet {
     }
 
     /**
-     * Prints the full status of this fleet to the standard output,
-     * including all ships, the ships still floating, and the ships
-     * grouped by each known category.
+     * Prints all ships, floating ships, and ships grouped by category.
      */
     public void printStatus() {
         printAllShips();
@@ -166,11 +141,9 @@ public class Fleet implements IFleet {
     }
 
     /**
-     * Prints all the ships of this fleet belonging to a particular
-     * category.
+     * Prints the ships belonging to a given category.
      *
-     * @param category the category of ships of interest; must not be
-     *                  {@code null}
+     * @param category the category of ships to print
      */
     public void printShipsByCategory(String category) {
         assert category != null;
@@ -179,14 +152,14 @@ public class Fleet implements IFleet {
     }
 
     /**
-     * Prints all the ships of this fleet that have not yet been shot down.
+     * Prints the ships that haven't been sunk yet.
      */
     public void printFloatingShips() {
         printShips(getFloatingShips());
     }
 
     /**
-     * Prints all the ships of this fleet, regardless of their status.
+     * Prints all ships in the fleet.
      */
     void printAllShips() {
         printShips(ships);
