@@ -1,25 +1,44 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Abstract base class representing a generic ship in the Battleship game.
+ * <p>
+ * Provides common functionality for managing ship attributes (category, bearing, reference position),
+ * tracking occupied grid positions, detecting collisions or adjacency, and processing target shots.
+ * </p>
+ *
+ * @author Rui
+ * @version 1.1
+ */
 public abstract class Ship implements IShip {
 
+    /** Identifier constant for a GALLEAO ship type. */
     private static final String GALEAO = "galeao";
+
+    /** Identifier constant for a FRAGATA ship type. */
     private static final String FRAGATA = "fragata";
+
+    /** Identifier constant for a NAU ship type. */
     private static final String NAU = "nau";
+
+    /** Identifier constant for a CARAVELA ship type. */
     private static final String CARAVELA = "caravela";
+
+    /** Identifier constant for a BARCA ship type. */
     private static final String BARCA = "barca";
 
     /**
-     * @param shipKind
-     * @param bearing
-     * @param pos
-     * @return
+     * Factory method that creates and instantiates a specific subclass of {@link Ship} 
+     * based on the provided ship kind string.
+     *
+     * @param shipKind The string identifier representing the ship category (e.g: "galeao", "fragata").
+     * @param bearing  The compass orientation {@link Compass} for the ship.
+     * @param pos      The starting reference {@link Position} for the ship.
+     * @return A concrete instance of a {@link Ship} subclass, or {@code null} if the ship kind is unrecognized.
      */
     static Ship buildShip(String shipKind, Compass bearing, Position pos) {
         Ship s;
@@ -45,17 +64,24 @@ public abstract class Ship implements IShip {
         return s;
     }
 
-
+    /** The category or type name of the ship. */
     private String category;
+
+    /** The cardinal direction/bearing facing of the ship. */
     private Compass bearing;
+
+    /** The reference (anchor/bow) position of the ship. */
     private IPosition pos;
+
+    /** The collection of all positions occupied by this ship on the grid. */
     protected List<IPosition> positions;
 
-
     /**
-     * @param category
-     * @param bearing
-     * @param pos
+     * Constructs a new {@code Ship} instance with the specified category, orientation, and reference position.
+     *
+     * @param category The category or class name of the ship.
+     * @param bearing  The orientation {@link Compass} of the ship. Must not be {@code null}.
+     * @param pos      The reference anchor {@link IPosition} of the ship. Must not be {@code null}.
      */
     public Ship(String category, Compass bearing, IPosition pos) {
         assert bearing != null;
@@ -67,10 +93,10 @@ public abstract class Ship implements IShip {
         positions = new ArrayList<>();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
-     * @see battleship.IShip#getCategory()
+     * @return The category name of the ship.
      */
     @Override
     public String getCategory() {
@@ -78,36 +104,42 @@ public abstract class Ship implements IShip {
     }
 
     /**
-     * @return the positions
+     * {@inheritDoc}
+     *
+     * @return A {@link List} of all {@link IPosition} instances occupied by this ship.
      */
+    @Override
     public List<IPosition> getPositions() {
         return positions;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
-     * @see battleship.IShip#getPosition()
+     * @return The reference {@link IPosition} of the ship.
      */
     @Override
     public IPosition getPosition() {
         return pos;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
-     * @see battleship.IShip#getBearing()
+     * @return The {@link Compass} direction of the ship.
      */
     @Override
     public Compass getBearing() {
         return bearing;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Iterates through all occupied positions and checks if at least one position remains unhit.
+     * </p>
      *
-     * @see battleship.IShip#stillFloating()
+     * @return {@code true} if at least one position is not hit; {@code false} if all positions are hit.
      */
     @Override
     public boolean stillFloating() {
@@ -117,10 +149,10 @@ public abstract class Ship implements IShip {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
-     * @see battleship.IShip#getTopMostPos()
+     * @return The minimum row index occupied by any part of the ship.
      */
     @Override
     public int getTopMostPos() {
@@ -131,10 +163,10 @@ public abstract class Ship implements IShip {
         return top;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
-     * @see battleship.IShip#getBottomMostPos()
+     * @return The maximum row index occupied by any part of the ship.
      */
     @Override
     public int getBottomMostPos() {
@@ -145,10 +177,10 @@ public abstract class Ship implements IShip {
         return bottom;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
-     * @see battleship.IShip#getLeftMostPos()
+     * @return The minimum column index occupied by any part of the ship.
      */
     @Override
     public int getLeftMostPos() {
@@ -159,10 +191,10 @@ public abstract class Ship implements IShip {
         return left;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
-     * @see battleship.IShip#getRightMostPos()
+     * @return The maximum column index occupied by any part of the ship.
      */
     @Override
     public int getRightMostPos() {
@@ -173,10 +205,11 @@ public abstract class Ship implements IShip {
         return right;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
-     * @see battleship.IShip#occupies(battleship.IPosition)
+     * @param pos The {@link IPosition} to check. Must not be {@code null}.
+     * @return {@code true} if this ship occupies the given position; {@code false} otherwise.
      */
     @Override
     public boolean occupies(IPosition pos) {
@@ -188,10 +221,11 @@ public abstract class Ship implements IShip {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
-     * @see battleship.IShip#tooCloseTo(battleship.IShip)
+     * @param other The other {@link IShip} to test for proximity. Must not be {@code null}.
+     * @return {@code true} if any position of the other ship is adjacent to or overlaps with this ship; {@code false} otherwise.
      */
     @Override
     public boolean tooCloseTo(IShip other) {
@@ -205,10 +239,11 @@ public abstract class Ship implements IShip {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
      *
-     * @see battleship.IShip#tooCloseTo(battleship.IPosition)
+     * @param pos The {@link IPosition} to test for adjacency.
+     * @return {@code true} if any position of this ship is adjacent to or matches the specified position; {@code false} otherwise.
      */
     @Override
     public boolean tooCloseTo(IPosition pos) {
@@ -218,11 +253,13 @@ public abstract class Ship implements IShip {
         return false;
     }
 
-
-    /*
-     * (non-Javadoc)
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Checks if the specified position belongs to this ship and, if so, marks that position as hit.
+     * </p>
      *
-     * @see battleship.IShip#shoot(battleship.IPosition)
+     * @param pos The target {@link IPosition} of the shot. Must not be {@code null}.
      */
     @Override
     public void shoot(IPosition pos) {
@@ -234,10 +271,13 @@ public abstract class Ship implements IShip {
         }
     }
 
-
+    /**
+     * Returns a string representation of this ship.
+     *
+     * @return A formatted String containing category, bearing, and reference position.
+     */
     @Override
     public String toString() {
         return "[" + category + " " + bearing + " " + pos + "]";
     }
-
 }

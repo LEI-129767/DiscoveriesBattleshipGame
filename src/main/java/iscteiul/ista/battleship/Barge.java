@@ -1,10 +1,10 @@
 package iscteiul.ista.battleship;
 
 /**
- * version 1.1
  * Represents the Barge, the smallest ship in the fleet (equivalent to
  * the submarine in traditional Battleship), occupying a single
  * position on the board.
+ 
  */
 public class Barge extends Ship {
     private static final Integer SIZE = 1;

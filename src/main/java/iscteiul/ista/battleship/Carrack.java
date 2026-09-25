@@ -1,11 +1,11 @@
 package iscteiul.ista.battleship;
 
 /**
- * version 1.1
  * Represents the Carrack, a 3-cell ship, corresponding to the 3-cannon
  * ship in traditional Battleship. There are two units of this ship per
  * fleet. It can be placed horizontally or vertically, depending on the
  * given bearing.
+ *
  */
 public class Carrack extends Ship {
     private static final Integer SIZE = 3;

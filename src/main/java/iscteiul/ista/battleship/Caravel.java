@@ -1,7 +1,6 @@
 package iscteiul.ista.battleship;
 
 /**
- * version 1.1
  * Represents the Caravel, a 2-cell ship, corresponding to the 2-cannon
  * ship in traditional Battleship. It can be placed horizontally or
  * vertically, depending on the given bearing.
