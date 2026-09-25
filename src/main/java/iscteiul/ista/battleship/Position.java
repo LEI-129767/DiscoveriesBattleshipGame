@@ -10,7 +10,7 @@ import java.util.Objects;
  * </p>
  *
  * @author Rui
- * @version 1.0
+ * @version 1.1
  */
 public class Position implements IPosition {
 

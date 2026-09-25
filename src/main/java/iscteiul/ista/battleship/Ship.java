@@ -12,30 +12,30 @@ import java.util.List;
  * </p>
  *
  * @author Rui
- * @version 1.0
+ * @version 1.1
  */
 public abstract class Ship implements IShip {
 
-    /** Identifier constant for a Galleon ship type. */
+    /** Identifier constant for a GALLEAO ship type. */
     private static final String GALEAO = "galeao";
 
-    /** Identifier constant for a Frigate ship type. */
+    /** Identifier constant for a FRAGATA ship type. */
     private static final String FRAGATA = "fragata";
 
-    /** Identifier constant for a Carrack ship type. */
+    /** Identifier constant for a NAU ship type. */
     private static final String NAU = "nau";
 
-    /** Identifier constant for a Caravel ship type. */
+    /** Identifier constant for a CARAVELA ship type. */
     private static final String CARAVELA = "caravela";
 
-    /** Identifier constant for a Barge ship type. */
+    /** Identifier constant for a BARCA ship type. */
     private static final String BARCA = "barca";
 
     /**
      * Factory method that creates and instantiates a specific subclass of {@link Ship} 
      * based on the provided ship kind string.
      *
-     * @param shipKind The string identifier representing the ship category (e.g., "galeao", "fragata").
+     * @param shipKind The string identifier representing the ship category (e.g: "galeao", "fragata").
      * @param bearing  The compass orientation {@link Compass} for the ship.
      * @param pos      The starting reference {@link Position} for the ship.
      * @return A concrete instance of a {@link Ship} subclass, or {@code null} if the ship kind is unrecognized.
