@@ -1,6 +1,7 @@
 package iscteiul.ista.battleship;
 
 /**
+ * version 1.1
  * Enumeration representing the four cardinal bearings used to position
  * ships on the board (NORTH, SOUTH, EAST, WEST), including an UNKNOWN
  * value for invalid or unrecognized bearings. Each bearing is
