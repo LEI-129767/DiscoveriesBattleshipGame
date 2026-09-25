@@ -1,42 +1,22 @@
 /**
- * Provides the {@link Galleon} ship class.
+ *
  */
 package iscteiul.ista.battleship;
 
 /**
- * Represents a galleon ("Galeao"), the largest ship in the fleet,
- * occupying 5 cells arranged in an irregular, arrow-like shape rather
- * than a straight line.
- * <p>
- * In the Discoveries Battleship version, each player has exactly one
- * galleon in their fleet, acting as the aircraft-carrier equivalent.
+ * Represents a galleon ("Galeao"), a 5-cell ship with an irregular, arrow-like shape.
  */
 public class Galleon extends Ship {
-
-    /** The number of grid cells occupied by a galleon. */
     private static final Integer SIZE = 5;
-
-    /** The display name used for this ship category. */
     private static final String NAME = "Galeao";
 
     /**
-     * Creates a galleon positioned on the board starting at {@code pos},
-     * with its 5 cells arranged according to the direction given by
-     * {@code bearing}.
-     * <p>
-     * Unlike straight ships, the galleon's shape is asymmetric: the exact
-     * arrangement of cells depends on the bearing and is computed by one
-     * of {@link #fillNorth}, {@link #fillSouth}, {@link #fillEast} or
-     * {@link #fillWest}.
+     * Creates a galleon at a given position and orientation.
      *
-     * @param bearing the orientation of the galleon; must be one of
-     *                {@code NORTH}, {@code SOUTH}, {@code EAST} or
-     *                {@code WEST}
-     * @param pos     the reference position from which the galleon's
-     *                shape is built
-     * @throws NullPointerException     if {@code bearing} is {@code null}
-     * @throws IllegalArgumentException if {@code bearing} is not a valid
-     *                                   orientation
+     * @param bearing the direction the ship faces (NORTH, SOUTH, EAST or WEST)
+     * @param pos     the reference position used to build the ship's shape
+     * @throws NullPointerException     if bearing is null
+     * @throws IllegalArgumentException if bearing is not a valid direction
      */
     public Galleon(Compass bearing, IPosition pos) throws IllegalArgumentException {
         super(Galleon.NAME, bearing, pos);
@@ -64,7 +44,7 @@ public class Galleon extends Ship {
     }
 
     /**
-     * {@inheritDoc}
+     * @return the number of cells occupied by a galleon
      */
     @Override
     public Integer getSize() {
@@ -72,11 +52,9 @@ public class Galleon extends Ship {
     }
 
     /**
-     * Fills this galleon's positions for a {@code NORTH} bearing: a row
-     * of 3 cells starting at {@code pos}, plus 2 cells extending downward
-     * from the middle of that row, forming a T-like shape.
+     * Builds the galleon's shape for a NORTH bearing.
      *
-     * @param pos the reference position for the shape
+     * @param pos the reference position
      */
     private void fillNorth(IPosition pos) {
         for (int i = 0; i < 3; i++) {
@@ -87,11 +65,9 @@ public class Galleon extends Ship {
     }
 
     /**
-     * Fills this galleon's positions for a {@code SOUTH} bearing: a
-     * column of 2 cells starting at {@code pos}, plus a row of 3 cells
-     * extending from the bottom of that column.
+     * Builds the galleon's shape for a SOUTH bearing.
      *
-     * @param pos the reference position for the shape
+     * @param pos the reference position
      */
     private void fillSouth(IPosition pos) {
         for (int i = 0; i < 2; i++) {
@@ -103,12 +79,9 @@ public class Galleon extends Ship {
     }
 
     /**
-     * Fills this galleon's positions for an {@code EAST} bearing: a
-     * single cell at {@code pos}, a row of 3 cells one row below it, and
-     * a single cell 2 rows below {@code pos}, forming an arrow pointing
-     * east.
+     * Builds the galleon's shape for an EAST bearing.
      *
-     * @param pos the reference position for the shape
+     * @param pos the reference position
      */
     private void fillEast(IPosition pos) {
         getPositions().add(new Position(pos.getRow(), pos.getColumn()));
@@ -119,12 +92,9 @@ public class Galleon extends Ship {
     }
 
     /**
-     * Fills this galleon's positions for a {@code WEST} bearing: a
-     * single cell at {@code pos}, a row of 3 cells one row below it, and
-     * a single cell 2 rows below {@code pos}, forming an arrow pointing
-     * west.
+     * Builds the galleon's shape for a WEST bearing.
      *
-     * @param pos the reference position for the shape
+     * @param pos the reference position
      */
     private void fillWest(IPosition pos) {
         getPositions().add(new Position(pos.getRow(), pos.getColumn()));
