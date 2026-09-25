@@ -1,0 +1,36 @@
+name: Notify PR Reviewer
+
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, review_requested]
+
+# Permissões necessárias para poder comentar no PR
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comentar a mencionar o(s) revisor(es)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const reviewers = context.payload.pull_request.requested_reviewers;
+
+            let message;
+            if (reviewers && reviewers.length > 0) {
+              const mentions = reviewers.map(r => `@${r.login}`).join(', ');
+              message = `👋 ${mentions}, foste marcado(a) como revisor(a) deste Pull Request. Podes dar uma vista de olhos quando possível?`;
+            } else {
+              message = `📢 Este Pull Request foi aberto e ainda não tem nenhum revisor atribuído.`;
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body: message
+            });
