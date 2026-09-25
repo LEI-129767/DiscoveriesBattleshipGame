@@ -1,226 +1,283 @@
-// RUI
-
-
-/**
- *
- */
 package iscteiul.ista.battleship;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+/**
+ * Abstract base class representing a generic ship in the Battleship game.
+ * <p>
+ * Provides common functionality for managing ship attributes (category, bearing, reference position),
+ * tracking occupied grid positions, detecting collisions or adjacency, and processing target shots.
+ * </p>
+ *
+ * @author Rui
+ * @version 1.0
+ */
+public abstract class Ship implements IShip {
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+    /** Identifier constant for a Galleon ship type. */
+    private static final String GALEAO = "galeao";
 
-public class Tasks {
-    private static final Logger LOGGER = LogManager.getLogger();
+    /** Identifier constant for a Frigate ship type. */
+    private static final String FRAGATA = "fragata";
 
-    private static final int NUMBER_SHOTS = 3;
+    /** Identifier constant for a Carrack ship type. */
+    private static final String NAU = "nau";
 
-    private static final String GOODBYE_MESSAGE = "Bons ventos!";
+    /** Identifier constant for a Caravel ship type. */
+    private static final String CARAVELA = "caravela";
 
-    /**
-     * Strings to be used by the user
-     */
-    private static final String NOVAFROTA = "nova";
-    private static final String DESISTIR = "desisto";
-    private static final String RAJADA = "rajada";
-    private static final String VERTIROS = "ver";
-    private static final String BATOTA = "mapa";
-    private static final String STATUS = "estado";
-
-
-    /////////////////////////////////////////////////////////////////////////////
-    // hereafter one may find some code that can be converted to automatic tests,
-    // as long as appropriate changes are made. It also shows that we should
-    // develop our code incrementally e.g. first the ships, then the fleet,
-    // then some rule checking, then dealing with firing and so on
-    /////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * This task tests the building up of ships: For each ship, reads positions and
-     * indicates whether the ship occupies each one of such positions or not
-     */
-    public static void taskA() {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNext()) {
-            Ship s = readShip(in);
-            if (s != null)
-                for (int i = 0; i < NUMBER_SHOTS; i++) {
-                    Position p = readPosition(in);
-                    LOGGER.info("{} {}", p, s.occupies(p));
-                }
-        }
-    }
+    /** Identifier constant for a Barge ship type. */
+    private static final String BARCA = "barca";
 
     /**
-     * This task tests the building up of fleets
-     */
-    public static void taskB() {
-        Scanner in = new Scanner(System.in);
-        IFleet fleet = null;
-        String command = in.next();
-        while (!command.equals(DESISTIR)) {
-            switch (command) {
-                case NOVAFROTA:
-                    fleet = buildFleet(in);
-                    break;
-                case STATUS:
-                    if (fleet != null)
-                        fleet.printStatus();
-                    break;
-                default:
-                    LOGGER.info("Que comando é esse??? Repete lá ...");
-            }
-            // The other commands are unknown in this task
-            command = in.next();
-        }
-        LOGGER.info(GOODBYE_MESSAGE);
-    }
-
-    /**
-     * This task tests the building up of fleets and takes into consideration the
-     * possibility of cheating
-     */
-    public static void taskC() {
-        Scanner in = new Scanner(System.in);
-        IFleet fleet = null;
-        String command = in.next();
-        while (!command.equals(DESISTIR)) {
-            switch (command) {
-                case NOVAFROTA:
-                    fleet = buildFleet(in);
-                    break;
-                case STATUS:
-                    if (fleet != null)
-                        fleet.printStatus();
-                    break;
-                case BATOTA:
-                    LOGGER.info(fleet);
-                    break;
-                default:
-                    LOGGER.info("Que comando é esse??? Repete lá ...");
-            }
-            // The other commands are unknown in this task
-            command = in.next();
-        }
-        LOGGER.info(GOODBYE_MESSAGE);
-    }
-
-    /**
-     * This task also tests the fighting element of a round of three shots
-     */
-    public static void taskD() {
-
-        Scanner in = new Scanner(System.in);
-        IFleet fleet = null;
-        IGame game = null;
-        String command = in.next();
-        while (!command.equals(DESISTIR)) {
-            switch (command) {
-                case NOVAFROTA:
-                    fleet = buildFleet(in);
-                    game = new Game(fleet);
-                    break;
-                case STATUS:
-                    if (fleet != null)
-                        fleet.printStatus();
-                    break;
-                case BATOTA:
-                    if (fleet != null)
-                        game.printFleet();
-                    break;
-                case RAJADA:
-                    if (game != null) {
-                        firingRound(in, game);
-
-                        LOGGER.info("Hits: {} Inv: {} Rep: {} Restam {} navios.", game.getHits(), game.getInvalidShots(),
-                                game.getRepeatedShots(), game.getRemainingShips());
-                        if (game.getRemainingShips() == 0)
-                            LOGGER.info("Maldito sejas, Java Sparrow, eu voltarei, glub glub glub...");
-                    }
-                    break;
-                case VERTIROS:
-                    if (game != null)
-                        game.printValidShots();
-                    break;
-                default:
-                    LOGGER.info("Que comando é esse??? Repete ...");
-            }
-            command = in.next();
-        }
-        LOGGER.info(GOODBYE_MESSAGE);
-    }
-
-    /**
-     * This operation allows the build up of a fleet, given user data
+     * Factory method that creates and instantiates a specific subclass of {@link Ship} 
+     * based on the provided ship kind string.
      *
-     * @param in The scanner to read from
-     * @return The fleet that has been built
+     * @param shipKind The string identifier representing the ship category (e.g., "galeao", "fragata").
+     * @param bearing  The compass orientation {@link Compass} for the ship.
+     * @param pos      The starting reference {@link Position} for the ship.
+     * @return A concrete instance of a {@link Ship} subclass, or {@code null} if the ship kind is unrecognized.
      */
-    static Fleet buildFleet(Scanner in) {
-        assert in != null;
-
-        Fleet fleet = new Fleet();
-        int i = 0; // i represents the total of successfully created ships
-
-        while (i <= Fleet.FLEET_SIZE) {
-            IShip s = readShip(in);
-            if (s != null) {
-                boolean success = fleet.addShip(s);
-                if (success)
-                    i++;
-                else
-                    LOGGER.info("Falha na criacao de {} {} {}", s.getCategory(), s.getBearing(), s.getPosition());
-            } else {
-                LOGGER.info("Navio desconhecido!");
-            }
+    static Ship buildShip(String shipKind, Compass bearing, Position pos) {
+        Ship s;
+        switch (shipKind) {
+            case BARCA:
+                s = new Barge(bearing, pos);
+                break;
+            case CARAVELA:
+                s = new Caravel(bearing, pos);
+                break;
+            case NAU:
+                s = new Carrack(bearing, pos);
+                break;
+            case FRAGATA:
+                s = new Frigate(bearing, pos);
+                break;
+            case GALEAO:
+                s = new Galleon(bearing, pos);
+                break;
+            default:
+                s = null;
         }
-        LOGGER.info("{} navios adicionados com sucesso!", i);
-        return fleet;
+        return s;
+    }
+
+    /** The category or type name of the ship. */
+    private String category;
+
+    /** The cardinal direction/bearing facing of the ship. */
+    private Compass bearing;
+
+    /** The reference (anchor/bow) position of the ship. */
+    private IPosition pos;
+
+    /** The collection of all positions occupied by this ship on the grid. */
+    protected List<IPosition> positions;
+
+    /**
+     * Constructs a new {@code Ship} instance with the specified category, orientation, and reference position.
+     *
+     * @param category The category or class name of the ship.
+     * @param bearing  The orientation {@link Compass} of the ship. Must not be {@code null}.
+     * @param pos      The reference anchor {@link IPosition} of the ship. Must not be {@code null}.
+     */
+    public Ship(String category, Compass bearing, IPosition pos) {
+        assert bearing != null;
+        assert pos != null;
+
+        this.category = category;
+        this.bearing = bearing;
+        this.pos = pos;
+        positions = new ArrayList<>();
     }
 
     /**
-     * This operation reads data about a ship, build it and returns it
+     * {@inheritDoc}
      *
-     * @param in The scanner to read from
-     * @return The created ship based on the data that has been read
+     * @return The category name of the ship.
      */
-    static Ship readShip(Scanner in) {
-        String shipKind = in.next();
-        Position pos = readPosition(in);
-        char c = in.next().charAt(0);
-        Compass bearing = Compass.charToCompass(c);
-        return Ship.buildShip(shipKind, bearing, pos);
+    @Override
+    public String getCategory() {
+        return category;
     }
 
     /**
-     * This operation allows reading a position in the map
+     * {@inheritDoc}
      *
-     * @param in The scanner to read from
-     * @return The position that has been read
+     * @return A {@link List} of all {@link IPosition} instances occupied by this ship.
      */
-    static Position readPosition(Scanner in) {
-        int row = in.nextInt();
-        int column = in.nextInt();
-        return new Position(row, column);
+    @Override
+    public List<IPosition> getPositions() {
+        return positions;
     }
 
     /**
-     * This operation allows firing a round of shots (three) over a fleet, in the
-     * context of a game
+     * {@inheritDoc}
      *
-     * @param in   The scanner to read from
-     * @param game The context game while fleet is being attacked
+     * @return The reference {@link IPosition} of the ship.
      */
-    static void firingRound(Scanner in, IGame game) {
-        for (int i = 0; i < NUMBER_SHOTS; i++) {
-            IPosition pos = readPosition(in);
-            IShip sh = game.fire(pos);
-            if (sh != null)
-                LOGGER.info("Mas... mas... {}s nao sao a prova de bala? :-(", sh.getCategory());
+    @Override
+    public IPosition getPosition() {
+        return pos;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return The {@link Compass} direction of the ship.
+     */
+    @Override
+    public Compass getBearing() {
+        return bearing;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Iterates through all occupied positions and checks if at least one position remains unhit.
+     * </p>
+     *
+     * @return {@code true} if at least one position is not hit; {@code false} if all positions are hit.
+     */
+    @Override
+    public boolean stillFloating() {
+        for (int i = 0; i < getSize(); i++)
+            if (!getPositions().get(i).isHit())
+                return true;
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return The minimum row index occupied by any part of the ship.
+     */
+    @Override
+    public int getTopMostPos() {
+        int top = getPositions().get(0).getRow();
+        for (int i = 1; i < getSize(); i++)
+            if (getPositions().get(i).getRow() < top)
+                top = getPositions().get(i).getRow();
+        return top;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return The maximum row index occupied by any part of the ship.
+     */
+    @Override
+    public int getBottomMostPos() {
+        int bottom = getPositions().get(0).getRow();
+        for (int i = 1; i < getSize(); i++)
+            if (getPositions().get(i).getRow() > bottom)
+                bottom = getPositions().get(i).getRow();
+        return bottom;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return The minimum column index occupied by any part of the ship.
+     */
+    @Override
+    public int getLeftMostPos() {
+        int left = getPositions().get(0).getColumn();
+        for (int i = 1; i < getSize(); i++)
+            if (getPositions().get(i).getColumn() < left)
+                left = getPositions().get(i).getColumn();
+        return left;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return The maximum column index occupied by any part of the ship.
+     */
+    @Override
+    public int getRightMostPos() {
+        int right = getPositions().get(0).getColumn();
+        for (int i = 1; i < getSize(); i++)
+            if (getPositions().get(i).getColumn() > right)
+                right = getPositions().get(i).getColumn();
+        return right;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param pos The {@link IPosition} to check. Must not be {@code null}.
+     * @return {@code true} if this ship occupies the given position; {@code false} otherwise.
+     */
+    @Override
+    public boolean occupies(IPosition pos) {
+        assert pos != null;
+
+        for (int i = 0; i < getSize(); i++)
+            if (getPositions().get(i).equals(pos))
+                return true;
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param other The other {@link IShip} to test for proximity. Must not be {@code null}.
+     * @return {@code true} if any position of the other ship is adjacent to or overlaps with this ship; {@code false} otherwise.
+     */
+    @Override
+    public boolean tooCloseTo(IShip other) {
+        assert other != null;
+
+        Iterator<IPosition> otherPos = other.getPositions().iterator();
+        while (otherPos.hasNext())
+            if (tooCloseTo(otherPos.next()))
+                return true;
+
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param pos The {@link IPosition} to test for adjacency.
+     * @return {@code true} if any position of this ship is adjacent to or matches the specified position; {@code false} otherwise.
+     */
+    @Override
+    public boolean tooCloseTo(IPosition pos) {
+        for (int i = 0; i < this.getSize(); i++)
+            if (getPositions().get(i).isAdjacentTo(pos))
+                return true;
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Checks if the specified position belongs to this ship and, if so, marks that position as hit.
+     * </p>
+     *
+     * @param pos The target {@link IPosition} of the shot. Must not be {@code null}.
+     */
+    @Override
+    public void shoot(IPosition pos) {
+        assert pos != null;
+
+        for (IPosition position : getPositions()) {
+            if (position.equals(pos))
+                position.shoot();
         }
-
     }
 
+    /**
+     * Returns a string representation of this ship.
+     *
+     * @return A formatted String containing category, bearing, and reference position.
+     */
+    @Override
+    public String toString() {
+        return "[" + category + " " + bearing + " " + pos + "]";
+    }
 }
