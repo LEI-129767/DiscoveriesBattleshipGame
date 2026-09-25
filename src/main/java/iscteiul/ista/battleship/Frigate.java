@@ -2,7 +2,7 @@
  *
  */
 package iscteiul.ista.battleship;
-
+//a
 public class Frigate extends Ship {
     private static final Integer SIZE = 4;
     private static final String NAME = "Fragata";
