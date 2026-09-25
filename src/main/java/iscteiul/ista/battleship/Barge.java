@@ -1,6 +1,3 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
 /**
@@ -34,5 +31,4 @@ public class Barge extends Ship {
     public Integer getSize() {
         return SIZE;
     }
-
 }
