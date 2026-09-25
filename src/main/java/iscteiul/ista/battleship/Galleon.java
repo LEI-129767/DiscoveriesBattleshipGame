@@ -3,13 +3,20 @@
  */
 package iscteiul.ista.battleship;
 
+/**
+ * Represents a galleon ("Galeao"), a 5-cell ship with an irregular, arrow-like shape.
+ */
 public class Galleon extends Ship {
     private static final Integer SIZE = 5;
     private static final String NAME = "Galeao";
 
     /**
-     * @param bearing
-     * @param pos
+     * Creates a galleon at a given position and orientation.
+     *
+     * @param bearing the direction the ship faces (NORTH, SOUTH, EAST or WEST)
+     * @param pos     the reference position used to build the ship's shape
+     * @throws NullPointerException     if bearing is null
+     * @throws IllegalArgumentException if bearing is not a valid direction
      */
     public Galleon(Compass bearing, IPosition pos) throws IllegalArgumentException {
         super(Galleon.NAME, bearing, pos);
@@ -36,16 +43,19 @@ public class Galleon extends Ship {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see battleship.Ship#getSize()
+    /**
+     * @return the number of cells occupied by a galleon
      */
     @Override
     public Integer getSize() {
         return Galleon.SIZE;
     }
 
+    /**
+     * Builds the galleon's shape for a NORTH bearing.
+     *
+     * @param pos the reference position
+     */
     private void fillNorth(IPosition pos) {
         for (int i = 0; i < 3; i++) {
             getPositions().add(new Position(pos.getRow(), pos.getColumn() + i));
@@ -54,6 +64,11 @@ public class Galleon extends Ship {
         getPositions().add(new Position(pos.getRow() + 2, pos.getColumn() + 1));
     }
 
+    /**
+     * Builds the galleon's shape for a SOUTH bearing.
+     *
+     * @param pos the reference position
+     */
     private void fillSouth(IPosition pos) {
         for (int i = 0; i < 2; i++) {
             getPositions().add(new Position(pos.getRow() + i, pos.getColumn()));
@@ -63,6 +78,11 @@ public class Galleon extends Ship {
         }
     }
 
+    /**
+     * Builds the galleon's shape for an EAST bearing.
+     *
+     * @param pos the reference position
+     */
     private void fillEast(IPosition pos) {
         getPositions().add(new Position(pos.getRow(), pos.getColumn()));
         for (int i = 1; i < 4; i++) {
@@ -71,6 +91,11 @@ public class Galleon extends Ship {
         getPositions().add(new Position(pos.getRow() + 2, pos.getColumn()));
     }
 
+    /**
+     * Builds the galleon's shape for a WEST bearing.
+     *
+     * @param pos the reference position
+     */
     private void fillWest(IPosition pos) {
         getPositions().add(new Position(pos.getRow(), pos.getColumn()));
         for (int i = 1; i < 4; i++) {
