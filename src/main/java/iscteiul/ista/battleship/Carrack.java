@@ -1,15 +1,23 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
+/**
+ * Represents the Carrack, a 3-cell ship, corresponding to the 3-cannon
+ * ship in traditional Battleship. There are two units of this ship per
+ * fleet. It can be placed horizontally or vertically, depending on the
+ * given bearing.
+ */
 public class Carrack extends Ship {
     private static final Integer SIZE = 3;
     private static final String NAME = "Nau";
 
     /**
-     * @param bearing
-     * @param pos
+     * Creates a new Carrack from an initial position and a bearing,
+     * computing and registering all the positions occupied by the ship
+     * on the board.
+     *
+     * @param bearing the bearing where the Carrack heads to (NORTH, SOUTH, EAST or WEST)
+     * @param pos     initial point for positioning the Carrack
+     * @throws IllegalArgumentException if the bearing is not one of the four valid values
      */
     public Carrack(Compass bearing, IPosition pos) throws IllegalArgumentException {
         super(Carrack.NAME, bearing, pos);
@@ -29,10 +37,10 @@ public class Carrack extends Ship {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Returns the number of cells occupied by the Carrack on the board.
      *
-     * @see battleship.Ship#getSize()
+     * @return the carrack's size, always equal to 3
      */
     @Override
     public Integer getSize() {
