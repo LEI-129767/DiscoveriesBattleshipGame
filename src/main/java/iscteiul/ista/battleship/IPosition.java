@@ -4,7 +4,7 @@
 package iscteiul.ista.battleship;
 
 /**
- * @author fba
+ * @author Mihaita Ferent
  */
 public interface IPosition {
     int getRow();
